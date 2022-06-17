@@ -14,6 +14,7 @@ import (
 )
 
 var filenames []string
+var adminPort int32 = 2601
 
 type output struct {
 	URLS  []string `json:"urls"`
@@ -42,21 +43,29 @@ smocky start --filename mock.yml --output-json
 		var shutdownServers []func()
 
 		out := output{}
+		ctx := context.Background()
 		for _, filename := range filenames {
 			serv := server.New()
-			url, shutdownServer, err := serv.StartFromFile(context.Background(), filename)
+			url, shutdownServer, err := serv.StartFromFile(ctx, filename)
 
 			if err != nil {
 				fmt.Printf("Failed to start server with file %v. Error: %v\n", filename, err)
-				for _, shutdown := range shutdownServers {
-					shutdown()
-				}
-				os.Exit(1)
+				quit(shutdownServers)
 			}
 			shutdownServers = append(shutdownServers, shutdownServer)
 
 			out.URLS = append(out.URLS, url)
 		}
+
+		// start admin
+		admin := server.NewAdminServer()
+		adminURL, shutdownServer, err := admin.Start(ctx, adminPort)
+		if err != nil {
+			fmt.Printf("Failed to start admin server. Error: %v\n", err)
+			quit(shutdownServers)
+		}
+		shutdownServers = append(shutdownServers, shutdownServer)
+		out.Admin = adminURL
 
 		data, _ := json.Marshal(out)
 		fmt.Println(string(data))
@@ -70,8 +79,16 @@ smocky start --filename mock.yml --output-json
 	},
 }
 
+func quit(shutdowns []func()) {
+	for _, shutdown := range shutdowns {
+		shutdown()
+	}
+	os.Exit(1)
+}
+
 func init() {
 	rootCmd.AddCommand(startCmd)
-	startCmd.Flags().StringArrayVarP(&filenames, "filename", "f", []string{}, "mock files")
+	startCmd.Flags().StringArrayVarP(&filenames, "filename", "f", []string{}, "location of the mock file")
+	startCmd.Flags().Int32Var(&adminPort, "admin-port", 2601, "port for admin API server")
 	_ = startCmd.MarkFlagRequired("filename")
 }
