@@ -27,10 +27,6 @@ func (s *Server) StartFromFile(ctx context.Context, file string) (string, func()
 		return "", nil, err
 	}
 
-	return s.StartFromMock(ctx, m)
-}
-
-func (s *Server) StartFromMock(ctx context.Context, m *mock.Mock) (string, func(), error) {
 	srv := s.buildHTTPServer(m)
 
 	listener, err := net.Listen("tcp", ":"+m.Port())

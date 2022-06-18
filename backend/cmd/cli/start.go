@@ -15,6 +15,7 @@ import (
 
 var filenames []string
 var adminPort int32 = 2601
+var enableAdmin = false
 
 type output struct {
 	URLS  []string `json:"urls"`
@@ -57,15 +58,16 @@ smocky start --filename mock.yml --output-json
 			out.URLS = append(out.URLS, url)
 		}
 
-		// start admin
-		admin := server.NewAdminServer()
-		adminURL, shutdownServer, err := admin.Start(ctx, adminPort)
-		if err != nil {
-			fmt.Printf("Failed to start admin server. Error: %v\n", err)
-			quit(shutdownServers)
+		if enableAdmin {
+			admin := server.NewAdminServer()
+			adminURL, shutdownServer, err := admin.Start(ctx, adminPort)
+			if err != nil {
+				fmt.Printf("Failed to start admin server. Error: %v\n", err)
+				quit(shutdownServers)
+			}
+			shutdownServers = append(shutdownServers, shutdownServer)
+			out.Admin = adminURL
 		}
-		shutdownServers = append(shutdownServers, shutdownServer)
-		out.Admin = adminURL
 
 		data, _ := json.Marshal(out)
 		fmt.Println(string(data))
@@ -90,5 +92,6 @@ func init() {
 	rootCmd.AddCommand(startCmd)
 	startCmd.Flags().StringArrayVarP(&filenames, "filename", "f", []string{}, "location of the mock file")
 	startCmd.Flags().Int32Var(&adminPort, "admin-port", 2601, "port for admin API server")
+	startCmd.Flags().BoolVar(&enableAdmin, "admin", false, "start with admin")
 	_ = startCmd.MarkFlagRequired("filename")
 }
