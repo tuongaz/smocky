@@ -9,9 +9,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 
-	"github.com/smockyio/smocky/backend/engine"
-	"github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/persistent"
+	"github.com/smockyio/smocky/engine"
+	"github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 type Result struct {

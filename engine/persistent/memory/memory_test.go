@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/smockyio/smocky/backend/engine/mock"
-	. "github.com/smockyio/smocky/backend/persistent/memory"
+	"github.com/smockyio/smocky/engine/mock"
+	. "github.com/smockyio/smocky/engine/persistent/memory"
 )
 
 func TestMemory_GetSetConfig(t *testing.T) {

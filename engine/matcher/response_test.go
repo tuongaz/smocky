@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/smockyio/smocky/backend/engine/matcher"
-	cfg "github.com/smockyio/smocky/backend/engine/mock"
+	"github.com/smockyio/smocky/engine/matcher"
+	cfg "github.com/smockyio/smocky/engine/mock"
 )
 
 func TestResponseMatcher_Match(t *testing.T) {

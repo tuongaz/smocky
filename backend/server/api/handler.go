@@ -5,7 +5,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/smockyio/smocky/backend/persistent"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 func GetMocksHandler(w http.ResponseWriter, r *http.Request) {

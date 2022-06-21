@@ -3,14 +3,14 @@ package smocky
 import (
 	"context"
 	"github.com/google/uuid"
-	"github.com/smockyio/smocky/backend/persistent"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/smockyio/smocky/backend/engine"
-	"github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/persistent/memory"
+	"github.com/smockyio/smocky/engine"
+	"github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
+	"github.com/smockyio/smocky/engine/persistent/memory"
 )
 
 const (

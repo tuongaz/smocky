@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v2"
 
-	. "github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/test"
+	. "github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/test"
 )
 
 func TestConfig(t *testing.T) {

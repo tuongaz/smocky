@@ -8,10 +8,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/smockyio/smocky/backend/engine/matcher"
-	cfg "github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/persistent"
-	"github.com/smockyio/smocky/backend/persistent/memory"
+	"github.com/smockyio/smocky/engine/matcher"
+	cfg "github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
+	"github.com/smockyio/smocky/engine/persistent/memory"
 )
 
 func TestRouteMatcher_Match(t *testing.T) {

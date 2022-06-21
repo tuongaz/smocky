@@ -1,7 +1,6 @@
 package matcher
 
 import (
-	"github.com/smockyio/smocky/backend/persistent"
 	"math/rand"
 	"strings"
 	"time"
@@ -9,7 +8,8 @@ import (
 	"github.com/minio/pkg/wildcard"
 	"github.com/pkg/errors"
 
-	cfg "github.com/smockyio/smocky/backend/engine/mock"
+	cfg "github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 type RouteMatcher struct {

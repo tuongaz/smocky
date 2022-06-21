@@ -6,18 +6,18 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/smockyio/smocky/backend/engine/matcher"
-	"github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/persistent"
+	"github.com/smockyio/smocky/engine/matcher"
+	"github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 type Mock struct {
 	mockID string
 }
 
-func New(configID string) (*Mock, error) {
+func New(mockID string) (*Mock, error) {
 	return &Mock{
-		mockID: configID,
+		mockID: mockID,
 	}, nil
 }
 

@@ -9,9 +9,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
-	. "github.com/smockyio/smocky/backend/pkg/smocky"
 	"github.com/stretchr/testify/require"
+
+	. "github.com/smockyio/smocky/pkg/smocky"
 )
 
 func TestBuilder_MatchedRoute(t *testing.T) {

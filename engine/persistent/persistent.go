@@ -3,7 +3,7 @@ package persistent
 import (
 	"context"
 
-	"github.com/smockyio/smocky/backend/engine/mock"
+	"github.com/smockyio/smocky/engine/mock"
 )
 
 var _default Persistent
@@ -30,6 +30,6 @@ type Persistent interface {
 	GetInt(ctx context.Context, key string) (int, error)
 	Increment(_ context.Context, key string) (int, error)
 
-	SetActiveSession(ctx context.Context, configID string, sessionID string) error
-	GetActiveSession(ctx context.Context, configID string) (string, error)
+	SetActiveSession(ctx context.Context, mockID string, sessionID string) error
+	GetActiveSession(ctx context.Context, mockID string) (string, error)
 }

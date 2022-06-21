@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/persistent"
+	"github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 var _ persistent.Persistent = &Memory{}
@@ -108,12 +108,12 @@ func (m *Memory) Increment(_ context.Context, key string) (int, error) {
 	return val, nil
 }
 
-func (m *Memory) SetActiveSession(ctx context.Context, configID string, sessionID string) error {
-	return m.Set(ctx, toActiveSessionKey(configID), sessionID)
+func (m *Memory) SetActiveSession(ctx context.Context, mockID string, sessionID string) error {
+	return m.Set(ctx, toActiveSessionKey(mockID), sessionID)
 }
 
-func (m *Memory) GetActiveSession(ctx context.Context, configID string) (string, error) {
-	value, err := m.Get(ctx, toActiveSessionKey(configID))
+func (m *Memory) GetActiveSession(ctx context.Context, mockID string) (string, error) {
+	value, err := m.Get(ctx, toActiveSessionKey(mockID))
 	if err != nil {
 		return "", err
 	}
@@ -125,6 +125,6 @@ func (m *Memory) GetActiveSession(ctx context.Context, configID string) (string,
 	return "", errors.New("unable to convert to string value")
 }
 
-func toActiveSessionKey(configID string) string {
-	return fmt.Sprintf("%s-active-session", configID)
+func toActiveSessionKey(mockID string) string {
+	return fmt.Sprintf("%s-active-session", mockID)
 }

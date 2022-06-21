@@ -9,8 +9,8 @@ import (
 	"github.com/itchyny/gojq"
 	"github.com/pkg/errors"
 
-	cfg "github.com/smockyio/smocky/backend/engine/mock"
-	"github.com/smockyio/smocky/backend/persistent"
+	cfg "github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 var targets = map[cfg.Target]getTargetValueFn{
