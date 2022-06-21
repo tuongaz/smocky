@@ -9,9 +9,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 
-	"github.com/smockyio/smocky/backend/mock"
-	"github.com/smockyio/smocky/backend/mock/config"
-	"github.com/smockyio/smocky/backend/persistent"
+	"github.com/smockyio/smocky/engine"
+	"github.com/smockyio/smocky/engine/mock"
+	"github.com/smockyio/smocky/engine/persistent"
 )
 
 type Result struct {
@@ -26,7 +26,7 @@ func New() *Server {
 }
 
 func (s *Server) StartFromFile(ctx context.Context, file string) (string, func(), error) {
-	cfg, err := config.FromYamlFile(file)
+	cfg, err := mock.FromYamlFile(file)
 	if err != nil {
 		return "", nil, err
 	}
@@ -42,7 +42,7 @@ func (s *Server) StartFromFile(ctx context.Context, file string) (string, func()
 
 	_ = db.SetConfig(ctx, cfg)
 
-	m, err := mock.New(mockID)
+	m, err := engine.New(mockID)
 	if err != nil {
 		return "", nil, err
 	}
@@ -75,7 +75,7 @@ func (s *Server) StartFromFile(ctx context.Context, file string) (string, func()
 	}, nil
 }
 
-func (s *Server) buildHTTPServer(m *mock.Mock) *http.Server {
+func (s *Server) buildHTTPServer(m *engine.Mock) *http.Server {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(m.Handler)
 
