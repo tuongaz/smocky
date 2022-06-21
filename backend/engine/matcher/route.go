@@ -9,7 +9,7 @@ import (
 	"github.com/minio/pkg/wildcard"
 	"github.com/pkg/errors"
 
-	cfg "github.com/smockyio/smocky/backend/mock/config"
+	cfg "github.com/smockyio/smocky/backend/engine/mock"
 )
 
 type RouteMatcher struct {

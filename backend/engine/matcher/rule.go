@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	cfg "github.com/smockyio/smocky/backend/mock/config"
+	cfg "github.com/smockyio/smocky/backend/engine/mock"
 )
 
 func NewRuleMatcher(route *cfg.Route, rule *cfg.Rule, req Context) *RuleMatcher {

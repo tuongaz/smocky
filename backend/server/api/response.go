@@ -1,16 +1,16 @@
-package server
+package api
 
 import (
 	"encoding/json"
 	"net/http"
 )
 
-type APIError struct {
+type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
 func responseError(w http.ResponseWriter, status int, message string) {
-	resp := APIError{message}
+	resp := ErrorResponse{message}
 	response(w, status, resp)
 }
 

@@ -1,4 +1,4 @@
-package config_test
+package mock_test
 
 import (
 	_ "embed"
@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v2"
 
-	. "github.com/smockyio/smocky/backend/mock/config"
+	. "github.com/smockyio/smocky/backend/engine/mock"
 	"github.com/smockyio/smocky/backend/test"
 )
 

@@ -4,7 +4,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/smockyio/smocky/backend/mock/config"
+	"github.com/smockyio/smocky/backend/engine/mock"
 )
 
 type When struct {
@@ -16,11 +16,11 @@ func (w *When) Start(t *testing.T) *httptest.Server {
 }
 
 func (w *When) And(target, modifier, operator, value string) *And {
-	w.builder.response.RuleAggregation = config.And
-	w.builder.response.Rules = append(w.builder.response.Rules, config.Rule{
-		Target:   config.Target(target),
+	w.builder.response.RuleAggregation = mock.And
+	w.builder.response.Rules = append(w.builder.response.Rules, mock.Rule{
+		Target:   mock.Target(target),
 		Modifier: modifier,
-		Operator: config.Operator(operator),
+		Operator: mock.Operator(operator),
 		Value:    value,
 	})
 
@@ -30,11 +30,11 @@ func (w *When) And(target, modifier, operator, value string) *And {
 }
 
 func (w *When) Or(target, modifier, operator, value string) *Or {
-	w.builder.response.RuleAggregation = config.Or
-	w.builder.response.Rules = append(w.builder.response.Rules, config.Rule{
-		Target:   config.Target(target),
+	w.builder.response.RuleAggregation = mock.Or
+	w.builder.response.Rules = append(w.builder.response.Rules, mock.Rule{
+		Target:   mock.Target(target),
 		Modifier: modifier,
-		Operator: config.Operator(operator),
+		Operator: mock.Operator(operator),
 		Value:    value,
 	})
 

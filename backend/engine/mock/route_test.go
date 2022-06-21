@@ -1,4 +1,4 @@
-package config_test
+package mock_test
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	. "github.com/smockyio/smocky/backend/mock/config"
+	. "github.com/smockyio/smocky/backend/engine/mock"
 )
 
 func TestRoute_Validate(t *testing.T) {

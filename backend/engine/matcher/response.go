@@ -3,7 +3,7 @@ package matcher
 import (
 	"github.com/pkg/errors"
 
-	cfg "github.com/smockyio/smocky/backend/mock/config"
+	cfg "github.com/smockyio/smocky/backend/engine/mock"
 )
 
 func NewResponseMatcher(
@@ -35,7 +35,7 @@ func (r *ResponseMatcher) Match() (bool, error) {
 	}
 
 	for _, rule := range r.response.Rules {
-		matched, err := NewRuleMatcher(r.route, &rule, r.req).Match() // matcher. rule.Match(route, request)
+		matched, err := NewRuleMatcher(r.route, &rule, r.req).Match() // matcher. rule.Engine(route, request)
 		if err != nil {
 			return false, errors.Wrap(err, "matching rule")
 		}
@@ -49,7 +49,7 @@ func (r *ResponseMatcher) Match() (bool, error) {
 		}
 	}
 
-	// Match all rules
+	// Engine all rules
 	if aggregation == cfg.And {
 		return true, nil
 	}

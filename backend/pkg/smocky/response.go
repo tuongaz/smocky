@@ -4,7 +4,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/smockyio/smocky/backend/mock/config"
+	"github.com/smockyio/smocky/backend/engine/mock"
 )
 
 type Response struct {
@@ -21,11 +21,11 @@ func (r *Response) Start(t *testing.T) *httptest.Server {
 }
 
 func (r *Response) When(target, modifier, operator, value string) *When {
-	r.builder.response.RuleAggregation = config.And
-	r.builder.response.Rules = append(r.builder.response.Rules, config.Rule{
-		Target:   config.Target(target),
+	r.builder.response.RuleAggregation = mock.And
+	r.builder.response.Rules = append(r.builder.response.Rules, mock.Rule{
+		Target:   mock.Target(target),
 		Modifier: modifier,
-		Operator: config.Operator(operator),
+		Operator: mock.Operator(operator),
 		Value:    value,
 	})
 
@@ -43,10 +43,10 @@ func (a *And) Start(t *testing.T) *httptest.Server {
 }
 
 func (a *And) And(target, modifier, operator, value string) *And {
-	a.builder.response.Rules = append(a.builder.response.Rules, config.Rule{
-		Target:   config.Target(target),
+	a.builder.response.Rules = append(a.builder.response.Rules, mock.Rule{
+		Target:   mock.Target(target),
 		Modifier: modifier,
-		Operator: config.Operator(operator),
+		Operator: mock.Operator(operator),
 		Value:    value,
 	})
 
@@ -58,10 +58,10 @@ type Or struct {
 }
 
 func (o *Or) Or(target, modifier, operator, value string) *Or {
-	o.builder.response.Rules = append(o.builder.response.Rules, config.Rule{
-		Target:   config.Target(target),
+	o.builder.response.Rules = append(o.builder.response.Rules, mock.Rule{
+		Target:   mock.Target(target),
 		Modifier: modifier,
-		Operator: config.Operator(operator),
+		Operator: mock.Operator(operator),
 		Value:    value,
 	})
 

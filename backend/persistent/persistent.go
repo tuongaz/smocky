@@ -3,7 +3,7 @@ package persistent
 import (
 	"context"
 
-	"github.com/smockyio/smocky/backend/mock/config"
+	"github.com/smockyio/smocky/backend/engine/mock"
 )
 
 var _default Persistent
@@ -20,9 +20,9 @@ func GetDefault() Persistent {
 }
 
 type Persistent interface {
-	SetConfig(ctx context.Context, cfg *config.Config) error
-	GetConfig(ctx context.Context, id string) (*config.Config, error)
-	GetConfigs(ctx context.Context) ([]*config.Config, error)
+	SetConfig(ctx context.Context, cfg *mock.Mock) error
+	GetConfig(ctx context.Context, id string) (*mock.Mock, error)
+	GetConfigs(ctx context.Context) ([]*mock.Mock, error)
 
 	Set(ctx context.Context, key string, value any) error
 	Get(ctx context.Context, key string) (any, error)

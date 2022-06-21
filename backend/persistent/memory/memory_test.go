@@ -7,12 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/smockyio/smocky/backend/mock/config"
+	"github.com/smockyio/smocky/backend/engine/mock"
 	. "github.com/smockyio/smocky/backend/persistent/memory"
 )
 
 func TestMemory_GetSetConfig(t *testing.T) {
-	cfg := &config.Config{
+	cfg := &mock.Mock{
 		Port: "1234",
 		ID:   "*id*",
 	}
@@ -67,12 +67,12 @@ func TestMemory_SetGetActiveSession(t *testing.T) {
 }
 
 func TestMemory_GetConfigs(t *testing.T) {
-	cfg1 := &config.Config{
+	cfg1 := &mock.Mock{
 		Port: "1234",
 		ID:   "*id1*",
 	}
 
-	cfg2 := &config.Config{
+	cfg2 := &mock.Mock{
 		Port: "1234",
 		ID:   "*id2*",
 	}

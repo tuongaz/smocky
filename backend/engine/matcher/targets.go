@@ -9,7 +9,7 @@ import (
 	"github.com/itchyny/gojq"
 	"github.com/pkg/errors"
 
-	cfg "github.com/smockyio/smocky/backend/mock/config"
+	cfg "github.com/smockyio/smocky/backend/engine/mock"
 	"github.com/smockyio/smocky/backend/persistent"
 )
 

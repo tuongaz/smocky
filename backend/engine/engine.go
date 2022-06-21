@@ -1,4 +1,4 @@
-package mock
+package engine
 
 import (
 	"net/http"
@@ -6,33 +6,33 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/smockyio/smocky/backend/mock/config"
-	"github.com/smockyio/smocky/backend/mock/matcher"
+	"github.com/smockyio/smocky/backend/engine/matcher"
+	"github.com/smockyio/smocky/backend/engine/mock"
 	"github.com/smockyio/smocky/backend/persistent"
 )
 
 type Mock struct {
-	configID string
+	mockID string
 }
 
 func New(configID string) (*Mock, error) {
 	return &Mock{
-		configID: configID,
+		mockID: configID,
 	}, nil
 }
 
-func (m *Mock) Match(req *http.Request) *config.Response {
+func (m *Mock) Engine(req *http.Request) *mock.Response {
 	ctx := req.Context()
 	db := persistent.GetDefault()
-	cfg, err := db.GetConfig(ctx, m.configID)
+	cfg, err := db.GetConfig(ctx, m.mockID)
 	if err != nil {
 		log.WithError(err).Error("loading mock")
 		return nil
 	}
 
-	sessionID, err := db.GetActiveSession(ctx, m.configID)
+	sessionID, err := db.GetActiveSession(ctx, m.mockID)
 	if err != nil {
-		log.WithError(err).WithField("config_id", m.configID).Error("get active session")
+		log.WithError(err).WithField("config_id", m.mockID).Error("get active session")
 	}
 
 	for _, route := range cfg.Routes {
@@ -62,7 +62,7 @@ func (m *Mock) Match(req *http.Request) *config.Response {
 }
 
 func (m *Mock) Handler(w http.ResponseWriter, r *http.Request) {
-	response := m.Match(r)
+	response := m.Engine(r)
 	if response == nil {
 		// TODO: no matched? What will be the response?
 		w.WriteHeader(http.StatusNotFound)

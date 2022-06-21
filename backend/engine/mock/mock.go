@@ -1,4 +1,4 @@
-package config
+package mock
 
 import (
 	"io/ioutil"
@@ -9,14 +9,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type Config struct {
+type Mock struct {
 	ID     string   `yaml:"id,omitempty" json:"id,omitempty"`
 	Name   string   `yaml:"name,omitempty" json:"name,omitempty"`
 	Port   string   `yaml:"port,omitempty" json:"port,omitempty"`
 	Routes []*Route `yaml:"routes,omitempty" json:"routes,omitempty"`
 }
 
-func FromYamlFile(file string) (*Config, error) {
+func FromYamlFile(file string) (*Mock, error) {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, errors.Wrap(err, "read mock file")
@@ -25,9 +25,9 @@ func FromYamlFile(file string) (*Config, error) {
 	return FromYaml(string(data))
 }
 
-func FromYaml(text string) (*Config, error) {
+func FromYaml(text string) (*Mock, error) {
 	decoder := yaml.NewDecoder(strings.NewReader(text))
-	cfg := &Config{}
+	cfg := &Mock{}
 	if err := decoder.Decode(cfg); err != nil {
 		return nil, errors.Wrap(err, "decode yaml to mock")
 	}
@@ -35,7 +35,7 @@ func FromYaml(text string) (*Config, error) {
 	return cfg, nil
 }
 
-func (c Config) Validate() error {
+func (c Mock) Validate() error {
 	return validation.ValidateStruct(
 		&c,
 		validation.Field(&c.Routes, validation.Required),

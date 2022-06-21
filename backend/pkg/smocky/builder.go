@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/smockyio/smocky/backend/mock"
-	"github.com/smockyio/smocky/backend/mock/config"
+	"github.com/smockyio/smocky/backend/engine"
+	"github.com/smockyio/smocky/backend/engine/mock"
 	"github.com/smockyio/smocky/backend/persistent/memory"
 )
 
@@ -31,14 +31,14 @@ type Headers map[string]string
 
 func New() *Builder {
 	return &Builder{
-		config: &config.Config{},
+		config: &mock.Mock{},
 	}
 }
 
 type Builder struct {
-	response *config.Response
-	route    *config.Route
-	config   *config.Config
+	response *mock.Response
+	route    *mock.Route
+	config   *mock.Mock
 }
 
 func (b *Builder) Start(t *testing.T) *httptest.Server {
@@ -54,7 +54,7 @@ func (b *Builder) Start(t *testing.T) *httptest.Server {
 	_ = mem.SetConfig(context.Background(), b.config)
 	_ = mem.SetActiveSession(context.Background(), id, "session-id")
 
-	m, err := mock.New(id)
+	m, err := engine.New(id)
 	if err != nil {
 		t.Errorf("fail to create mock: %v", err)
 	}
@@ -69,7 +69,7 @@ func (b *Builder) Port(port string) *Builder {
 
 func (b *Builder) Post(url string) *Builder {
 	b.clear()
-	b.route = &config.Route{
+	b.route = &mock.Route{
 		Request: "POST " + url,
 	}
 	return b
@@ -77,7 +77,7 @@ func (b *Builder) Post(url string) *Builder {
 
 func (b *Builder) Get(url string) *Builder {
 	b.clear()
-	b.route = &config.Route{
+	b.route = &mock.Route{
 		Request: "GET " + url,
 	}
 	return b
@@ -85,7 +85,7 @@ func (b *Builder) Get(url string) *Builder {
 
 func (b *Builder) Put(url string) *Builder {
 	b.clear()
-	b.route = &config.Route{
+	b.route = &mock.Route{
 		Request: "PUT " + url,
 	}
 	return b
@@ -93,7 +93,7 @@ func (b *Builder) Put(url string) *Builder {
 
 func (b *Builder) Delete(url string) *Builder {
 	b.clear()
-	b.route = &config.Route{
+	b.route = &mock.Route{
 		Request: "DELETE " + url,
 	}
 	return b
@@ -101,7 +101,7 @@ func (b *Builder) Delete(url string) *Builder {
 
 func (b *Builder) Option(url string) *Builder {
 	b.clear()
-	b.route = &config.Route{
+	b.route = &mock.Route{
 		Request: "OPTION " + url,
 	}
 	return b
@@ -112,7 +112,7 @@ func (b *Builder) Response(status int, body string, headers ...Headers) *Respons
 		headers = append(headers, map[string]string{})
 	}
 
-	b.response = &config.Response{
+	b.response = &mock.Response{
 		Body:    body,
 		Status:  status,
 		Headers: headers[0],

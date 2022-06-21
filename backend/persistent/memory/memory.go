@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/smockyio/smocky/backend/mock/config"
+	"github.com/smockyio/smocky/backend/engine/mock"
 	"github.com/smockyio/smocky/backend/persistent"
 )
 
@@ -14,13 +14,13 @@ var _ persistent.Persistent = &Memory{}
 
 type Memory struct {
 	mu      sync.Mutex
-	configs map[string]*config.Config
+	configs map[string]*mock.Mock
 	kv      map[string]any
 }
 
 func New() *Memory {
 	return &Memory{
-		configs: map[string]*config.Config{},
+		configs: map[string]*mock.Mock{},
 		kv:      map[string]any{},
 	}
 }
@@ -40,7 +40,7 @@ func (m *Memory) Set(_ context.Context, key string, value any) error {
 	return nil
 }
 
-func (m *Memory) SetConfig(ctx context.Context, cfg *config.Config) error {
+func (m *Memory) SetConfig(ctx context.Context, cfg *mock.Mock) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
@@ -48,7 +48,7 @@ func (m *Memory) SetConfig(ctx context.Context, cfg *config.Config) error {
 	return nil
 }
 
-func (m *Memory) GetConfig(ctx context.Context, id string) (*config.Config, error) {
+func (m *Memory) GetConfig(ctx context.Context, id string) (*mock.Mock, error) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
@@ -60,8 +60,8 @@ func (m *Memory) GetConfig(ctx context.Context, id string) (*config.Config, erro
 	return cfg, nil
 }
 
-func (m *Memory) GetConfigs(ctx context.Context) ([]*config.Config, error) {
-	var configs []*config.Config
+func (m *Memory) GetConfigs(ctx context.Context) ([]*mock.Mock, error) {
+	var configs []*mock.Mock
 	for _, cfg := range m.configs {
 		configs = append(configs, cfg)
 	}
