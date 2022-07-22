@@ -22,7 +22,7 @@
           @after-leave="query = ''"
       >
         <ComboboxOptions
-            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-slate-900 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none text-sm"
+            class="absolute mt-1 max-h-90 w-full overflow-auto rounded-md bg-slate-900 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none text-sm"
         >
           <ComboboxOption
               v-for="item in filteredItems"
@@ -60,26 +60,29 @@ import {computed, ref} from 'vue'
 
 const props = defineProps({
   items: {type: Array as () => Array<Item>, required: true},
-  modelValue: {type: Object as () => Item, required: true},
+  selected: {type: Object as () => Item, required: true},
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['change'])
 
 interface Item {
   id: string
   name: string
 }
 
-let query = ref('')
+let _value = ref(props.selected)
+
 let value = computed({
   get() {
-    return props.modelValue
+    return _value.value
   },
   set(value) {
-    emits('update:modelValue', value)
+    _value.value = value
+    emits('change', value)
   }
 })
 
+let query = ref('')
 const filteredItems = computed(() => {
   return query.value === ''
       ? props.items
