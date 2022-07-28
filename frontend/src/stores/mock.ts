@@ -32,6 +32,11 @@ export interface Response {
     id: string
     status: string
     body: string
+    headers: Header[]
+}
+
+export interface Header {
+
 }
 
 export const useMockStore = defineStore({
@@ -88,7 +93,6 @@ export const useMockStore = defineStore({
             mock.data.routes[routeIdx] = {...mock.data.routes[routeIdx], ...data}
 
             this.mocks[mockIdx] = {...mock, data: {...mock.data, routes: [...mock.data.routes]}}
-
             // send data to server
             return axios.patch(getUrl(`/mocks/${mockId}/routes/${routeId}`), data)
         },
@@ -112,7 +116,6 @@ export const useMockStore = defineStore({
             mock.data.routes[routeIdx].responses[responseIdx] = {...mock.data.routes[routeIdx].responses[responseIdx], ...data}
 
             this.mocks[mockIdx] = {...mock, data: {...mock.data, routes: [...mock.data.routes]}}
-
             // send data to server
             return axios.patch(getUrl(`/mocks/${mockId}/routes/${routeId}/responses/${responseId}`), data)
         },
